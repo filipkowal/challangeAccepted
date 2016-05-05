@@ -1,0 +1,52 @@
+<head>
+  <title>simple</title>
+</head>
+
+<body>
+	<header>
+		<h1>Bucket List</h1>
+	</header>
+	
+	<nav>
+		{{> nav}}
+	</nav>
+	{{> insertChallange}}
+	{{> challangeList}}
+
+</body>
+
+<template name="nav">
+	{{listView}}
+	<ul>
+  		<li class="listView">Lista wyzwań</li>
+  		<li class="insertView">Dodaj wyzwanie</li>
+  	</ul>
+</template>
+
+<template name="insertChallange">
+	{{#if insertView}}
+		<form class="insertChallange">
+		 		<input type="text" name="challangeName" placeholder="Nazwa wyzwania" />
+		 		<input type="number" name="latitude" placeholder="Szerokość geograficzna" />
+		 		<input type="number" name="longitude" placeholder="Wysokość geograficzna" /><br/>
+		 		<input type="text" name="challangeDescription" placeholder="Opis wyzwania" /><br/>
+		 		<input type="submit" value="Dodaj wyzwanie" class="submitChallange">
+	 	</form>
+ 	{{/if}}
+</template>
+
+<template name="challangeList">
+	{{#if listView}}
+		<ul>
+			{{#each showChallanges}}
+			<li>
+				{{challangeName}} <button class="delete">&times;</button><br/>
+				Współrzędne: {{latitude}}N {{longitude}}E <br/>
+				Opis: {{challangeDescription}} <br/>
+				Podejmuję wyzwanie <input type="checkbox" name="challangeAccepted" value="challangeAccepted"><br/>
+	 			Ukończyłem wyzwanie <input type="checkbox" name="challangeAcomplished" value="challangeAcomplished">
+			</li>
+			{{/each}}
+		</ul>
+ 	{{/if}}
+</template>
