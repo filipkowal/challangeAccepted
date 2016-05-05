@@ -1,0 +1,6 @@
+Żeby otworzyć aplikację:
+  Wejdź na: https://www.meteor.com/install i zainstaluj meteora
+  W wierszu poleceń/bashu przejdź do folderu bucketList
+  Wpisz komendę meteor
+  W firefoxie/chromie wejdź na localhost:3000
+  Voila!
