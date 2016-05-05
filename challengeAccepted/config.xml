@@ -9,6 +9,6 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
-	
+	<gap:platform name="android" />
 	<plugin name="fi.avaus.cordova.geolocation" spec="0.3.11" source="pgb" />
 </widget>
