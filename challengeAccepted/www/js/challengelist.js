@@ -43,8 +43,7 @@ function loadBucketList() {
 	//categories...
 	for (var j = 0; j < itemList.length; j++) {
 		for (var k = 0; k < categories.length; k++) {
-			if(categories[k] === itemList[j].category){
-				
+			if(new String(categories[k]).valueOf() === new String(itemList[j].bucketCategory).valueOf()){
 				if(listContent[k] == null || listContent == undefined){
 					listContent[k] = '<li data-role="list-divider">' +
 					'<h2>' + categories[k] + '</h2>' +
@@ -59,14 +58,12 @@ function loadBucketList() {
 	}
 	
 	for (var k = 0; k < categories.length; k++) {
-		if(listContent[k] != null && listContent != undefined){
+		if(listContent != null && listContent != undefined && listContent[k] != null && listContent[k] != undefined){
 			$('#list').append(listContent[k]);
 		}
 	}
-	
 	if(itemList.length > 0 ){
-		$('#list').listview('refresh');
-		
+		$('#list').listview('refresh');	
 	} else {
 		//$('#emptyList').show();
 	}
@@ -77,7 +74,7 @@ function processAddForm(form) {
 		var item = {
 			name:form.fname.value,
 			localization:form.flocation.value,
-			category:form.fcategory.value
+			bucketCategory:form.fcategory.value
 			//longitude:form.flongitude.value,
 			//lattitude:form.flattitude.value,
 			//img:form.fimage.value,
@@ -95,7 +92,8 @@ function validateForm() {
     if (x == null || x == "") {
         alert("Name must be filled out");
         return false;
-    }	
+    }
+	
 	return true;
 }
 
@@ -122,7 +120,9 @@ function clearLocalStorage() {
 	alert("Successfully cleared the list");
 }
 
-
+function handleImage(imagePath){
+	alert(imagePath);
+}
 
 
 

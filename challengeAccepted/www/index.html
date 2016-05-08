@@ -61,6 +61,7 @@
 	<div data-role="page" id="pageAdd">
 		<script src="js/challengelist.js"></script> 
 		<script src="js/iscroll.js"></script>
+
 		<div data-role="header" data-add-back-btn="true">
 			<h1>Bucket List</h1>
 		</div>
@@ -75,21 +76,17 @@
 				<input type="text" name="flocation" id="flocation" data-clear-btn="true" placeholder="Tatry">
 				
 				<label for="fimage">Select image</label>
-				<input type="text" name="fimage" id="fimage">
-				
-				<fieldset data-role="controlgroup">
-					<legend>Category</legend>
-					<label for="category.mountain">Mountain</label>
-					<input type="radio" name="fcategory" id="category.mountain" value="Mountain">
-					<label for="category.city">City</label>
-					<input type="radio" name="fcategory" id="category.city" value="City">
-					<label for="category.other">Other</label>
-					<input type="radio" name="fcategory" id="category.other" value="Other" checked="checked">	
-				</fieldset>
+				<button class="ui-btn" onClick="" value="">Select image from gallery</button>
 
+				<label for="fcategory" class="select">Select Category</label>
+					<select name="fcategory" id="fcategory2">
+					<option value="Mountain">Mountain</option>
+					<option value="Mountain">City</option>
+					<option value="Mountain">Other</option>
+				</select>
+				
 				<input type="submit" value="Submit" onClick="processAddForm(this.form)">
 			</form>
-
 		</div>
 	</div>
 	
