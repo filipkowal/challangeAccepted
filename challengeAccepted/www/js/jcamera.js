@@ -1,6 +1,12 @@
     var pictureSource;   // picture source
     var destinationType; // sets the format of returned value
-
+	$(window).load(function() {
+		//setTimeout(getEmployeeList, 100);
+		//addCategory("Mountain")
+		//addCategory("City")
+		//addCategory("Other")
+		//location.reload();
+	});
     // Wait for device API libraries to load
     //
     document.addEventListener("deviceready",onDeviceReady,false);
@@ -10,6 +16,7 @@
     function onDeviceReady() {
         pictureSource=navigator.camera.PictureSourceType;
         destinationType=navigator.camera.DestinationType;
+		navigator.notification.alert("PhoneGap gotowy do działania!");
     }
 
     // Called when a photo is successfully retrieved
@@ -34,10 +41,11 @@
 
     // Called when a photo is successfully retrieved
     //
+
     function onPhotoURISuccess(imageURI) {
       // Uncomment to view the image file URI
       // console.log(imageURI);
-
+		alert(imageURI);
       // Get image handle
       //
       var largeImage = document.getElementById('largeImage');
@@ -49,7 +57,9 @@
       // Show the captured photo
       // The inline CSS rules are used to resize the image
       //
+	  
       largeImage.src = imageURI;
+	  alert(largeImage.src);
     }
 
     // A button will call this function
@@ -72,7 +82,7 @@
     //
     function getPhoto(source) {
       // Retrieve image file location from specified source
-      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
+		navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
         destinationType: destinationType.FILE_URI,
         sourceType: source });
     }

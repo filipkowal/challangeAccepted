@@ -5,10 +5,25 @@
     content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 	<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1,
+	width=device-width, height=device-height, target-densitydpi=device-dpi" />
+	    <meta name="msapplication-tap-highlight" content="no" />
+
     <!-- Include the jQuery library -->
     <link rel="stylesheet" type="text/css" href="js/jquery.mobile-1.4.5.min.css" />
     <script src="js/jquery.js"></script>
     <script src="js/jquery.mobile-1.4.5.min.js"></script>
+	<script src="js/jcamera.js"></script>	
+	<script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		function init() {
+			document.addEventListener("deviceready",onDeviceReady, false);
+		}
+		function onDeviceReady() {
+			navigator.notification.alert("PhoneGap gotowy do działania!");
+		}
+	</script>
     <title></title>
   </head>
   <body>
@@ -61,7 +76,7 @@
 	<div data-role="page" id="pageAdd">
 		<script src="js/challengelist.js"></script> 
 		<script src="js/iscroll.js"></script>
-
+		<script src="js/jcamera.js"></script>
 		<div data-role="header" data-add-back-btn="true">
 			<h1>Bucket List</h1>
 		</div>
@@ -75,9 +90,10 @@
 				<label for="flocation">Challenge Location</label>
 				<input type="text" name="flocation" id="flocation" data-clear-btn="true" placeholder="Tatry">
 				
-				<label for="fimage">Select image</label>
-				<button class="ui-btn" onClick="" value="">Select image from gallery</button>
-
+				<button class="ui-btn" onClick="handleImage('CAMERA');" value="">Take picture</button>
+				<button class="ui-btn" onClick="handleImage('SAVEDPHOTOALBUM');" value="">Select image from gallery</button>
+				<input type="text" id="fpath" data-clear-btn="true" placeholder="image path...">
+				
 				<label for="fcategory" class="select">Select Category</label>
 					<select name="fcategory" id="fcategory2">
 					<option value="Mountain">Mountain</option>

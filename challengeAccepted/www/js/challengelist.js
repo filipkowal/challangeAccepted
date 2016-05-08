@@ -74,10 +74,11 @@ function processAddForm(form) {
 		var item = {
 			name:form.fname.value,
 			localization:form.flocation.value,
+			img:form.fpath.value,
 			bucketCategory:form.fcategory.value
 			//longitude:form.flongitude.value,
 			//lattitude:form.flattitude.value,
-			//img:form.fimage.value,
+			
 			//description:form.fdescription.value
 		};
 
@@ -120,8 +121,18 @@ function clearLocalStorage() {
 	alert("Successfully cleared the list");
 }
 
-function handleImage(imagePath){
-	alert(imagePath);
+function handleImage(source){
+	if(source === "SAVEDPHOTOALBUM"){
+		getPhoto(pictureSource.PHOTOLIBRARY);
+	} else if (source === "CAMERA"){
+		capturePhoto();
+	}
+	$.mobile.navigate('#pageAdd');
+	//$.mobile.navigate('#pageAdd');
+	
+	var largeImage = document.getElementById('largeImage');	
+	var path = document.getElementById('fpath');
+	path.value = largeImage.src;
 }
 
 
