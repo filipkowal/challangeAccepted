@@ -1,33 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="generator"
-    content="HTML Tidy for HTML5 (experimental) for Windows https://github.com/w3c/tidy-html5/tree/c63cc39" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-	<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1,
-	width=device-width, height=device-height, target-densitydpi=device-dpi" />
-	    <meta name="msapplication-tap-highlight" content="no" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Include the jQuery library -->
     <link rel="stylesheet" type="text/css" href="js/jquery.mobile-1.4.5.min.css" />
+	<link rel="stylesheet" href="css/styles.css" />
     <script src="js/jquery.js"></script>
     <script src="js/jquery.mobile-1.4.5.min.js"></script>
 	<script src="js/jcamera.js"></script>	
 	<script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
 	<script type="text/javascript" src="cordova.js"></script>
-	<script type="text/javascript" charset="utf-8">
-		function init() {
-			document.addEventListener("deviceready",onDeviceReady, false);
-		}
-		function onDeviceReady() {
-			navigator.notification.alert("PhoneGap gotowy do działania!");
-		}
-	</script>
     <title></title>
   </head>
   <body>
     <div data-role="page" id="pageMenu">
+		<script src="js/challengelist.js"></script> 
+		<script src="js/jcamera.js"></script>
       <div data-role="header">
         <h1>Bucket List</h1>
       </div>
@@ -55,7 +43,11 @@
         </ul>
       </div>
     </div>
-	
+	<script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+        app.initialize();
+    </script>
 	
     <div data-role="page" id="pageList" data-cache="false">
 		<script src="js/challengelist.js"></script> 
@@ -75,7 +67,6 @@
 	
 	<div data-role="page" id="pageAdd">
 		<script src="js/challengelist.js"></script> 
-		<script src="js/iscroll.js"></script>
 		<script src="js/jcamera.js"></script>
 		<div data-role="header" data-add-back-btn="true">
 			<h1>Bucket List</h1>
@@ -90,15 +81,21 @@
 				<label for="flocation">Challenge Location</label>
 				<input type="text" name="flocation" id="flocation" data-clear-btn="true" placeholder="Tatry">
 				
-				<button class="ui-btn" onClick="handleImage('CAMERA');" value="">Take picture</button>
 				<button class="ui-btn" onClick="handleImage('SAVEDPHOTOALBUM');" value="">Select image from gallery</button>
 				<input type="text" id="fpath" data-clear-btn="true" placeholder="image path...">
+				
+				
+				<label for="flattitude">Add Latittude(-90:90)</label>
+				<input type="text" id="flattitude" data-clear-btn="true" placeholder="44.2564">
+				
+				<label for="flattitude">Add Longitude(-90:90)</label>
+				<input type="text" id="flattitude" data-clear-btn="true" placeholder="-22.3215456">
 				
 				<label for="fcategory" class="select">Select Category</label>
 					<select name="fcategory" id="fcategory2">
 					<option value="Mountain">Mountain</option>
-					<option value="Mountain">City</option>
-					<option value="Mountain">Other</option>
+					<option value="City">City</option>
+					<option value="Other">Other</option>
 				</select>
 				
 				<input type="submit" value="Submit" onClick="processAddForm(this.form)">
@@ -116,6 +113,15 @@
 		
 		<div data-role="main" class="ui-content">
 			<h2>Challenge details</h2>
+			<div id="detailsDiv1">
+			</div>
+			<div data-role="fieldcontain">
+				<label for="flip-3">Flip switch:</label>
+				<select name="flip-3" id="flip-3" data-role="slider" data-theme="a">
+					<option value="no">No</option>
+					<option value="yes">Yes</option>
+				</select> 
+			</div>
 		</div>
 	</div>
 	
@@ -132,6 +138,8 @@
 			<button class="ui-btn" onClick="clearLocalStorage();">Clear Bucket List</button>
 		</div>
 	</div>
+	
+	
 	
   </body>
 </html>

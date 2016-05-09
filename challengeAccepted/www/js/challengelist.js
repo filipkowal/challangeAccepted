@@ -5,6 +5,8 @@ var COUNTER_KEY = "COUNTER_KEY";
 var CATEGORY_KEY = "CATEGORY_KEY";
 var CHALLENGE_OBJECT_KEY = "challengeKey";
 
+var bucketList;
+
 $(window).load(function() {
 	//setTimeout(getEmployeeList, 100);
 	init();
@@ -24,6 +26,8 @@ function init(){
 	} else {
 		alert("Sorry! No Web Storage support... App cannot work properly");
 	}
+	
+	bucketList = new Array();
 }
 
 function loadBucketList() {
@@ -34,24 +38,24 @@ function loadBucketList() {
 	counter = localStorage.getItem(COUNTER_KEY);
 	var itemList = new Array();
 	for(i = 0; i < counter; i++){
-		itemList[i] = JSON.parse(localStorage.getItem(CHALLENGE_OBJECT_KEY + (i + 1)));
+		bucketList[i] = JSON.parse(localStorage.getItem(CHALLENGE_OBJECT_KEY + (i + 1)));
 	}
 	
 	var listContent = new Array();
 	var categories = ["Mountain", "Other", "City"];
 
 	//categories...
-	for (var j = 0; j < itemList.length; j++) {
+	for (var j = 0; j < bucketList.length; j++) {
 		for (var k = 0; k < categories.length; k++) {
-			if(new String(categories[k]).valueOf() === new String(itemList[j].bucketCategory).valueOf()){
+			if(new String(categories[k]).valueOf() === new String(bucketList[j].bucketCategory).valueOf()){
 				if(listContent[k] == null || listContent == undefined){
 					listContent[k] = '<li data-role="list-divider">' +
 					'<h2>' + categories[k] + '</h2>' +
 					'</li>';
 				}
-				listContent[k] += '<li><a href="index.html#pageDetails?id=' + '' + '">' +
+				listContent[k] += '<li><a href="index.html#pageDetails?=" onclick="handleDetailPage(' + j + ')">' +
 				//'<img src= ' + "img/Matterhorn.jpg" + '>' + 
-				'<h2>' + itemList[j].name + '</h2>' +
+				'<h2>' + bucketList[j].name + '</h2>' +
 				'</a></li>';
 			}
 		}				
@@ -62,7 +66,7 @@ function loadBucketList() {
 			$('#list').append(listContent[k]);
 		}
 	}
-	if(itemList.length > 0 ){
+	if(bucketList.length > 0 ){
 		$('#list').listview('refresh');	
 	} else {
 		//$('#emptyList').show();
@@ -75,7 +79,8 @@ function processAddForm(form) {
 			name:form.fname.value,
 			localization:form.flocation.value,
 			img:form.fpath.value,
-			bucketCategory:form.fcategory.value
+			bucketCategory:form.fcategory.value,
+			done:false
 			//longitude:form.flongitude.value,
 			//lattitude:form.flattitude.value,
 			
@@ -127,12 +132,40 @@ function handleImage(source){
 	} else if (source === "CAMERA"){
 		capturePhoto();
 	}
-	$.mobile.navigate('#pageAdd');
-	//$.mobile.navigate('#pageAdd');
+}
+
+function handleDetailPage(noItem){
+	var content = "";
+	var bucket = bucketList[noItem];
+	if(bucket.img != null){
+		content += '<img src= ' + "img/Matterhorn.jpg" + '>';
+	} else {
+		//to do default image
+	}
+	 
 	
-	var largeImage = document.getElementById('largeImage');	
-	var path = document.getElementById('fpath');
-	path.value = largeImage.src;
+	content +=  '<h2>' + bucket.name + '</h2>';
+	
+	if(bucket.localization != null){
+		content +=  '<label for="">Localization</label>';
+		content +=  '<p>' + bucket.localization + '</p>';
+	}	
+	
+	content += '<div data-role="fieldcontain"> <label for="flip-2">Done</label>'
+	            '<select name="flip-2" id="flip-2" data-role="slider" onclick="markDone(' + noItem + ')">'
+				'<option value="nope">Nope</option>'
+				'<option value="yep">Yep</option>'
+				'</select> '
+			'</div>'
+	
+	$('#detailsDiv1').append(content);
+}
+
+
+
+function markDone(noItem){
+	alert(noItem);
+	
 }
 
 
@@ -141,16 +174,7 @@ function handleImage(source){
 
 
 
-
-
-
-
-
-
-
-
-
-// Not used. Yet?  ============================================
+// Not used. Yet? Jakbysmy chcieli w przyszlosci dynamicznie kategorie dodatawac. Narazie sa 3===================================
 function getCategories(){
 	jsonCategories = localStorage.getItem(CATEGORY_KEY);
 	if(jsonCategories == null){
@@ -178,3 +202,100 @@ function addCategory(category){
 function storeCategory(categories){
 	jsonCategories = localStorage.setItem(CATEGORY_KEY, JSON.stringify(categories));
 }
+
+//=============Nizej js odpowiedzialny za kamerke - odczyt z galerii===============================================
+//=============Czemu w 1 pliku? Bo inaczje cholerstwo nie dzialalo ======================================
+    var pictureSource;   // picture source
+    var destinationType; // sets the format of returned value
+	//$(window).load(function() {
+	//});
+    // Wait for device API libraries to load
+    //
+    document.addEventListener("deviceready",onDeviceReady,false);
+
+    // device APIs are available
+    //
+    function onDeviceReady() {
+        pictureSource=navigator.camera.PictureSourceType;
+        destinationType=navigator.camera.DestinationType;
+    }
+
+    // Called when a photo is successfully retrieved
+    //
+    function onPhotoDataSuccess(imageData) {
+      // Uncomment to view the base64-encoded image data
+      // console.log(imageData);
+	
+      // Get image handle
+      //
+      var smallImage = document.getElementById('smallImage');
+
+      // Unhide image elements
+      //
+      smallImage.style.display = 'block';
+
+      // Show the captured photo
+      // The inline CSS rules are used to resize the image
+      //
+      smallImage.src = "data:image/jpeg;base64," + imageData;
+    }
+
+    // Called when a photo is successfully retrieved
+    //
+
+    function onPhotoURISuccess(imageURI) {
+      // Uncomment to view the image file URI
+      // console.log(imageURI);
+      // Get image handle
+	  var path = document.getElementById('fpath');
+	  path.value = imageURI;
+      //
+      var largeImage = document.getElementById('largeImage');
+
+      // Unhide image elements
+      //
+      largeImage.style.display = 'block';
+
+      // Show the captured photo
+      // The inline CSS rules are used to resize the image
+      //
+	  
+      largeImage.src = imageURI;
+	  var path = document.getElementById('fpath');
+	  
+	  alert(largeImage.src);
+	  localStorage.setItem("fPATH", largeImage.src);
+    }
+
+    // A button will call this function
+    //
+    function capturePhoto() {
+      // Take picture using device camera and retrieve image as base64-encoded string
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50,
+        destinationType: destinationType.DATA_URL });
+    }
+
+    // A button will call this function
+    //
+    function capturePhotoEdit() {
+      // Take picture using device camera, allow edit, and retrieve image as base64-encoded string
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 20, allowEdit: true,
+        destinationType: destinationType.DATA_URL });
+    }
+
+    // A button will call this function
+    //
+    function getPhoto(source) {
+      // Retrieve image file location from specified source
+		navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
+        destinationType: destinationType.FILE_URI,
+        sourceType: source });
+    }
+
+    // Called if something bad happens.
+    //
+    function onFail(message) {
+      alert('Failed because: ' + message);
+    }
+	
+	//================ koniec js od kamery ===================================
