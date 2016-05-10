@@ -136,11 +136,13 @@ function handleImage(source){
 
 function handleDetailPage(noItem){
 	var content = "";
+	$('#detailsDiv1').empty();
+	//$('#list').removeData("li");
 	var bucket = bucketList[noItem];
-	if(bucket.img != null){
-		content += '<img src= ' + "img/Matterhorn.jpg" + '>';
+	if(bucket.img != null && bucket.img != ""){
+		content += '<img src= ' + bucket.img + '>';
 	} else {
-		//to do default image
+		content += '<img src= ' + "img/Matterhorn.jpg" + '>';
 	}
 	 
 	
@@ -163,8 +165,8 @@ function handleDetailPage(noItem){
 
 
 
-function markDone(noItem){
-	alert(noItem);
+function markDone(){
+	
 	
 }
 
@@ -248,7 +250,9 @@ function storeCategory(categories){
       // console.log(imageURI);
       // Get image handle
 	  var path = document.getElementById('fpath');
-	  path.value = imageURI;
+	  var pathToChange = imageURI;
+	  pathToChange = path.replace("%", "%25");
+	  path.value = pathToChange;
       //
       var largeImage = document.getElementById('largeImage');
 
